@@ -1,16 +1,18 @@
 {
   "name": "pitasc-plugin",
   "main": "./lib/pitasc-plugin",
-  "version": "0.4.0",
+  "version": "0.1.0",
   "description": "Replace skill name with description",
-  "keywords": [],
+  "keywords": [
+  ],
   "activationCommands": {
     "atom-workspace": "pitasc-plugin:toggle"
   },
-  "repository": "https://github.com/ipa-danb/pitasc-plugin",
+  "repository": "https://github.com/ipa-danb/pitasc-plugin.git",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }
