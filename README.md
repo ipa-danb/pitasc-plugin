@@ -16,6 +16,6 @@ This creates a file `pitasc.dump`, which is the base for the replace function.
 - [ ] Check every item for correctness (only superficial checks right now)
 - [ ] add regex checks, to adapt for orthography
 - [ ] hover-over would be nice :)
-- [ ] skill lists are not added yet (e.g. `skill_sequence`)
+- [x] skill lists are not added yet (e.g. `skill_sequence`)
 - [ ] Proper release to Atom package list, as soon as it is not broken anymore
 - [ ] check if having the same ID and prototype is allowed

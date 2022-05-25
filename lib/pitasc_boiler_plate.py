@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import pitasc.model
-from pitasc.parameter_model import ParameterBasic, ParameterDict, ParameterModel
+from pitasc.parameter_model import ParameterBasic, ParameterDict, ParameterModel, ParameterList
 from cppitasc.package_path import get_package_path
 
 ## python
-from collections import OrderedDict
+from collections import OrderedDict, ChainMap
 import copy
 import argparse
 import json
@@ -17,6 +17,7 @@ import rospy
 class Loader():
     def __init__(self, file_paths = []):
         self.file_paths = file_paths
+        self.elements = ['skill', 'monitor', 'script']
         self.file_paths.append(get_package_path('pitasc_library') + '/models/skills.xml')
         self.desc = pitasc.model.Model()
         for path in self.file_paths:
@@ -24,32 +25,39 @@ class Loader():
         self.build_skill_tree()
 
     def build_skill_tree(self):
+        self.skill_tree = ChainMap(*[self.build_tree(e) for e in self.elements])
+        return self.skill_tree
+
+    def build_tree(self, type_name):
         hate_count = 0
         skill_tree = {}
-        for parameter in self.desc.root.find_models('skill'):
+        for parameter in self.desc.root.find_models(type_name):
             para_tree = {}
             for param in parameter.data.values():
+                #print(type(param), param.parameter_id)
                 if type(param) is ParameterBasic:
                     try:
-                        #print(param.parameter_id, type(param))
+                        # print(param.parameter_id, type(param))
                         pt = str(param.data_type)
                         try:
                             if type(param.data) is OrderedDict:
                                 continue
                             else:
                                 pd = str(param.data).replace('[','').replace(']','').replace("'",'')
-                        except:
+                        except Exception:
                             pd = None
                         para_tree[str(param.parameter_id)] = {'data': pd, 'description': pt}
-                    except:
+                        #print({'data': pd, 'description': pt})
+                    except Exception:
                         hate_count += 1
                         print(" ^^^ i hate this parameter\n")
                         print("----------------------------")
                         raise
-
+                elif type(param) is ParameterList:
+                    if param.parameter_id in ['skills', 'monitors', 'scripts']:
+                        para_tree[str(param.parameter_id)] = {'data': '\n\t', 'description': f'List : Enter {param.parameter_id} here'}
             skill_tree[parameter.parameter_id] = copy.deepcopy(para_tree)
             skill_tree[parameter.parameter_id]["desc"] = parameter.meta.data["description"].data
-        self.skill_tree = skill_tree
         return skill_tree
 
     def build_xml_segment(self, name):
