@@ -1,10 +1,9 @@
 {
   "name": "pitasc-plugin",
   "main": "./lib/pitasc-plugin",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Replace skill name with description",
-  "keywords": [
-  ],
+  "keywords": [],
   "activationCommands": {
     "atom-workspace": "pitasc-plugin:toggle"
   },
@@ -13,6 +12,5 @@
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
