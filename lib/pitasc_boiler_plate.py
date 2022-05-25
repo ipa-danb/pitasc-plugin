@@ -65,7 +65,7 @@ class Loader():
         # startzeile:
         building_pattern = str('')
         building_pattern += '<!-- {} -->\n'.format(rab.pop('desc'))
-        building_pattern += '<clone id="{0}" prototype="{0}">\n'.format(name)
+        building_pattern += '<clone id="instance_{0}" prototype="{0}">\n'.format(name)
         rab.pop('skill_name', None)
         for element in rab:
             building_pattern += '\t<!--member: {0} type: {1} -->\n'.format(element, rab[element]['description'])
